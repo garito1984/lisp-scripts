@@ -7,7 +7,7 @@
 ;; (load-file "~/Documents/lisp-scripts/raw-guid.el")
 
 (defun fa-guid-convert-region ()
-  "Convert value from raw to string and vice versa"
+  "Convert value from RAW to UUID and vice versa"
   (interactive)
   (let* ((str (buffer-substring-no-properties (region-beginning) (region-end)))
 	 (str-len (length str))
@@ -22,11 +22,11 @@
     (insert converted-str)))
 
 (defun fa--guid-to-raw (guid)
-  "Convert guid into raw Oracle string"
+  "Convert UUID into RAW"
   (string-replace "-" "" (upcase guid)))
 
 (defun fa--raw-to-guid (raw-guid)
-  "Convert raw into a UUID string"
+  "Convert RAW into a UUID"
   (let* ((uuid-first  (substring raw-guid 0 8))
  	 (uuid-second (substring raw-guid 8 12))
 	 (uuid-third  (substring raw-guid 12 16))
