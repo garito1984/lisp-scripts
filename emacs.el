@@ -1,3 +1,6 @@
+;;
+;; Emacs config file `.emacs`
+;;
 (require 'package)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -44,6 +47,9 @@ Scroll down if LINES is a negative number, scroll up otherwise."
 This is useful for instance to decode JWT tokens"
   (interactive)
   (base64-decode-region (region-beginning) (region-end) t))
+
+;; Windows related config (where applicable)
+;;(setenv "PATH" (concat "C:/Users/XXX/Downloads/mmmm/PortableGit/usr/bin;" (getenv "PATH")))
 
 ;; Load personal scripts
 (load-file "~/Documents/lisp-scripts/raw-guid.elc")
