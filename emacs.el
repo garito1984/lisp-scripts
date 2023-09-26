@@ -52,4 +52,4 @@ This is useful for instance to decode JWT tokens"
 ;;(setenv "PATH" (concat "C:/Users/XXX/Downloads/mmmm/PortableGit/usr/bin;" (getenv "PATH")))
 
 ;; Load personal scripts
-(load-file "~/Documents/lisp-scripts/raw-guid.elc")
+(load "~/Documents/lisp-scripts/raw-guid")
