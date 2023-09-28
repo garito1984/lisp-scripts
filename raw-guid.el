@@ -17,7 +17,7 @@
 	  ((equal str-len 32) ; RAW
 	   (setq converted-str (fa--raw-to-guid str)))
 	  (t
-	   (error "Not a valid UUID")))
+	   (error "Not a valid RAW or plain UUID")))
     (delete-region (region-beginning) (region-end))
     (insert converted-str)))
 
