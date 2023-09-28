@@ -4,7 +4,7 @@
 ;; UUID: 550e8400-e29b-41d4-a716-446655440000
 ;; RAW:      550E8400E29B41D4A716446655440000
 ;;
-;; (load-file "~/Documents/lisp-scripts/raw-guid.el")
+;; (load "~/Documents/lisp-scripts/raw-guid.el")
 
 (defun fa-guid-convert-region ()
   "Convert value from RAW to UUID and vice versa"
