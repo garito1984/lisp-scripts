@@ -53,3 +53,5 @@ This is useful for instance to decode JWT tokens"
 
 ;; Load personal scripts
 (load "~/Documents/lisp-scripts/raw-guid")
+(load "~/Documents/lisp-scripts/jwt-decode")
+
