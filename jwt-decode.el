@@ -33,4 +33,4 @@
 
 (defun fa--search-token-start ()
   (re-search-backward "[^[:graph:]]") ;; Find first non graph char
-  (re-search-forward "[[:blank:]]*")) ;; If there is a blank char, skip it
+  (re-search-forward "[[:blank:][:cntrl:]]*")) ;; If there is a blank or newline char, skip it
