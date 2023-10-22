@@ -6,7 +6,7 @@
 (defun fa-jwt-decode ()
   "Decode jwt-token"
   (interactive)
-  (fa--jwt-decode-impl (re-search-backward "[^[:graph:]]") (re-search-forward "[[:graph:]]+")))
+  (fa--jwt-decode-impl (fa--search-token-start) (re-search-forward "[[:graph:]]+")))
 
 (defun fa-jwt-decode-region (&optional all)
   "Decode jwt-token region"
@@ -31,4 +31,6 @@
 	 signature))
       "."))))
 
-
+(defun fa--search-token-start ()
+  (re-search-backward "[^[:graph:]]") ;; Find first non graph char
+  (re-search-forward "[[:blank:]]*")) ;; If there is a blank char, skip it
