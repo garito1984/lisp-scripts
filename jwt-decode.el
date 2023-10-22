@@ -32,5 +32,5 @@
       "."))))
 
 (defun fa--search-token-start ()
-  (re-search-backward "[^[:graph:]]") ;; Find first non graph char
+  (re-search-backward "\\(^[[:graph:]]\\|[^[:graph:]]\\)") ;; Find first non graph char or the first char if token is at the beginning of the line
   (re-search-forward "[[:blank:][:cntrl:]]*")) ;; If there is a blank or newline char, skip it
