@@ -15,11 +15,10 @@
 
 (defun fa--jwt-decode-impl (beginning end &optional all)
   "Decode jwt-token impl"
-  (let* ((token (buffer-substring-no-properties beginning end))
-	 (token-subcomponents (split-string token "\\."))
-	 (header (pop token-subcomponents))
-	 (payload (pop token-subcomponents))
-	 (signature (pop token-subcomponents)))
+  (let* ((components (fa--buffer-jwt-token-subcomponents beginning end))
+	 (header (pop components))
+	 (payload (pop components))
+	 (signature (pop components)))
     (delete-region beginning end)
     (insert
      (string-join
@@ -30,6 +29,9 @@
 	   (base64-decode-string signature t)
 	 signature))
       "."))))
+
+(defun fa--buffer-jwt-token-subcomponents (beginning end)
+  (split-string (buffer-substring-no-properties beginning end) "\\."))
 
 (defun fa--search-token-start ()
   (re-search-backward "\\(^[[:graph:]]\\|[^[:graph:]]\\)") ;; Find first non graph char or the first char if token is at the beginning of the line
