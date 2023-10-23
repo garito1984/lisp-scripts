@@ -16,10 +16,10 @@
 (defun fa--jwt-decode-impl (beginning end &optional all)
   "Decode jwt-token impl"
   (let* ((token (buffer-substring-no-properties beginning end))
-	 (tokens (split-string token "\\."))
-	 (header (car tokens))
-	 (payload (cadr tokens))
-	 (signature (caddr tokens)))
+	 (token-subcomponents (split-string token "\\."))
+	 (header (pop token-subcomponents))
+	 (payload (pop token-subcomponents))
+	 (signature (pop token-subcomponents)))
     (delete-region beginning end)
     (insert
      (string-join
