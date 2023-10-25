@@ -6,10 +6,20 @@
 ;;
 ;; (load "~/Documents/lisp-scripts/raw-guid.el")
 
+(defun fa-guid-convert ()
+  "Convert raw/guid value"
+  (interactive)
+  (fa--guid-convert-region-impl (fa--find-guid-start) (fa--find-guid-end)))
+
 (defun fa-guid-convert-region ()
   "Convert value from RAW to UUID and vice versa"
   (interactive)
-  (let* ((str (buffer-substring-no-properties (region-beginning) (region-end)))
+  (fa--guid-convert-region-impl (region-beginning) (region-end)))
+
+(defun fa--guid-convert-region-impl (beginning end)
+  "Convert value from RAW to UUID and vice versa"
+  (interactive)
+  (let* ((str (buffer-substring-no-properties beginning end))
 	 (str-len (length str))
 	 (converted-str str))
     (cond ((equal str-len 36) ; UUID
@@ -18,7 +28,7 @@
 	   (setq converted-str (fa--raw-to-guid str)))
 	  (t
 	   (error "Not a valid RAW or plain UUID")))
-    (delete-region (region-beginning) (region-end))
+    (delete-region beginning end)
     (insert converted-str)))
 
 (defun fa--guid-to-raw (guid)
@@ -41,3 +51,9 @@
 	    uuid-fifth)
       "-"))))
 
+(defun fa--find-guid-start ()
+  (re-search-backward "\\(^[[:graph:]]\\|[^[:graph:]]\\)") ;; Find first non graph char or the first char if token is at the beginning of the line
+  (re-search-forward "[[:blank:][:cntrl:]]*")) ;; If there is a blank or newline char, skip it
+
+(defun fa--find-guid-end ()
+  (re-search-forward "[[:graph:]]+"))
