@@ -33,7 +33,7 @@
 
 (defun fa--guid-to-raw (guid)
   "Convert UUID into RAW"
-  (string-replace "-" "" (upcase guid)))
+  (upcase (string-replace "-" "" guid)))
 
 (defun fa--raw-to-guid (raw-guid)
   "Convert RAW into a UUID"
@@ -42,18 +42,12 @@
 	 (uuid-third  (substring raw-guid 12 16))
 	 (uuid-fourth (substring raw-guid 16 20))
 	 (uuid-fifth  (substring raw-guid 20 32)))
-    (downcase
-     (string-join
-      (list uuid-first
-	    uuid-second
-	    uuid-third
-	    uuid-fourth
-	    uuid-fifth)
-      "-"))))
+    (downcase (format "%s-%s-%s-%s-%s"
+	    uuid-first uuid-second uuid-third uuid-fourth uuid-fifth))))
 
 (defun fa--find-guid-start ()
-  (re-search-backward "\\(^[[:graph:]]\\|[^[:graph:]]\\)") ;; Find first non graph char or the first char if token is at the beginning of the line
-  (re-search-forward "[[:blank:][:cntrl:]]*")) ;; If there is a blank or newline char, skip it
+  (re-search-backward "\\(^[[:alnum:]]\\|[^[:alnum:]-]\\)") ;; Find first line char or first guid's first char
+  (re-search-forward "[[:blank:][:cntrl:]\"']*")) ;; Skip spaces and newline chars
 
 (defun fa--find-guid-end ()
-  (re-search-forward "[[:graph:]]+"))
+  (re-search-forward "[[:alnum:]-]+"))
