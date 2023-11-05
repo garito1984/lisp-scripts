@@ -52,6 +52,6 @@ This is useful for instance to decode JWT tokens"
 ;;(setenv "PATH" (concat "C:/Users/XXX/Downloads/mmmm/PortableGit/usr/bin;" (getenv "PATH")))
 
 ;; Load personal scripts
-(load "~/Documents/lisp-scripts/raw-uuid")
+(load "~/Documents/lisp-scripts/oracle-uuid")
 (load "~/Documents/lisp-scripts/jwt-decode")
 
