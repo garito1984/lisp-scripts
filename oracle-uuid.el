@@ -18,7 +18,6 @@
 
 (defun fa--uuid-convert-region-impl (beginning end)
   "Convert value from RAW to UUID and vice versa"
-  (interactive)
   (let* ((str (buffer-substring-no-properties beginning end))
 	 (str-len (length str))
 	 (converted-str str))
