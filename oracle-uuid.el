@@ -45,8 +45,7 @@
 	    uuid-first uuid-second uuid-third uuid-fourth uuid-fifth))))
 
 (defun fa--find-uuid-start ()
-  (re-search-backward "\\(^[[:alnum:]]\\|[^[:alnum:]-]\\)") ;; Find beginning of line or first non uuid char
-  (re-search-forward "[[:blank:][:cntrl:]\"']*")) ;; Skip non uuid char if any (space, new line or quote)
+  (+ (point) (skip-chars-backward "[[:alnum:]-]"))) 
 
 (defun fa--find-uuid-end ()
-  (re-search-forward "[[:alnum:]-]+"))
+  (+ (point) (skip-chars-forward "[[:alnum:]-]")))
