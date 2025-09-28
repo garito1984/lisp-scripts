@@ -4,31 +4,33 @@
 ;; UUID: 550e8400-e29b-41d4-a716-446655440000
 ;; RAW:      550E8400E29B41D4A716446655440000
 ;;
-;; (load "~/Documents/lisp-scripts/raw-uuid.el")
+;; (load "~/Documents/lisp-scripts/oracle-uuid.el")
 
 (defun fa-oracle-uuid-convert ()
   "Convert raw/uuid value"
   (interactive)
-  (oracle--uuid-convert-region-impl (oracle--find-uuid-start) (oracle--find-uuid-end)))
+  (let* ((begin (oracle--find-uuid-start))
+	 (end   (oracle--find-uuid-end))
+	 (str   (buffer-substring-no-properties begin end)))
+    (oracle--update-buffer begin end (oracle--uuid-convert-region str))))
 
 (defun fa-oracle-uuid-convert-region ()
   "Convert value from RAW to UUID and vice versa"
   (interactive)
-  (oracle--uuid-convert-region-impl (region-beginning) (region-end)))
+  (let* ((begin (region-beginning))
+	 (end   (region-end))
+	 (str   (buffer-substring-no-properties begin end)))
+    (oracle--update-buffer begin end (oracle--uuid-convert-region str))))
 
-(defun oracle--uuid-convert-region-impl (beginning end)
+(defun oracle--uuid-convert-region (str)
   "Convert value from RAW to UUID and vice versa"
-  (let* ((str (buffer-substring-no-properties beginning end))
-	 (str-len (length str))
-	 (converted-str str))
+  (let* ((str-len (length str)))
     (cond ((equal str-len 36) ; UUID
-	   (setq converted-str (oracle--uuid-to-raw str)))
+	   (oracle--uuid-to-raw str))
 	  ((equal str-len 32) ; RAW
-	   (setq converted-str (oracle--raw-to-uuid str)))
+	   (oracle--raw-to-uuid str))
 	  (t
-	   (error "Not a valid RAW or plain UUID")))
-    (delete-region beginning end)
-    (insert converted-str)))
+	   (error "Not a valid RAW or plain UUID")))))
 
 (defun oracle--uuid-to-raw (uuid)
   "Convert UUID into RAW"
@@ -42,10 +44,14 @@
 	 (uuid-fourth (substring raw-uuid 16 20))
 	 (uuid-fifth  (substring raw-uuid 20 32)))
     (downcase (format "%s-%s-%s-%s-%s"
-	    uuid-first uuid-second uuid-third uuid-fourth uuid-fifth))))
+		      uuid-first uuid-second uuid-third uuid-fourth uuid-fifth))))
 
 (defun oracle--find-uuid-start ()
-  (+ (point) (skip-chars-backward "[[:alnum:]-]"))) 
+  (+ (point) (skip-chars-backward "[[:alnum:]-]")))
 
 (defun oracle--find-uuid-end ()
   (+ (point) (skip-chars-forward "[[:alnum:]-]")))
+
+(defun oracle--update-buffer (begin end str-converted)
+  (delete-region begin end)
+  (insert str-converted))
