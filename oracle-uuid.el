@@ -1,3 +1,7 @@
+;;; oracle-uuid.el -*- lexical-binding: t -*-
+
+;;; Commentary:
+
 ;;
 ;; Convert Oracle raw values into UUID and back
 ;;
@@ -5,6 +9,8 @@
 ;; RAW:      550E8400E29B41D4A716446655440000
 ;;
 ;; (load "~/Documents/lisp-scripts/oracle-uuid.el")
+
+;;; Code:
 
 (defun fa-oracle-uuid-convert ()
   "Convert raw/uuid value"
