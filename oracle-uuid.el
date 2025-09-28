@@ -13,20 +13,18 @@
 ;;; Code:
 
 (defun fa-oracle-uuid-convert ()
-  "Convert raw/uuid value"
+  "Convert value from RAW to UUID and vice versa"
   (interactive)
-  (let* ((begin (oracle--find-uuid-start!))
-	 (end   (oracle--find-uuid-end!))
-	 (str   (buffer-substring-no-properties begin end)))
-    (oracle--update-buffer! begin end (oracle--uuid-convert-region str))))
+  (let ((begin (oracle--find-uuid-start!))
+	(end   (oracle--find-uuid-end!)))
+    (oracle--uuid-convert! begin end)))
 
 (defun fa-oracle-uuid-convert-region ()
   "Convert value from RAW to UUID and vice versa"
   (interactive)
-  (let* ((begin (region-beginning))
-	 (end   (region-end))
-	 (str   (buffer-substring-no-properties begin end)))
-    (oracle--update-buffer! begin end (oracle--uuid-convert-region str))))
+  (let ((begin (region-beginning))
+	(end   (region-end)))
+    (oracle--uuid-convert! begin end)))
 
 ;;
 ;; Pure functions (no effects)
@@ -58,6 +56,11 @@
 ;;
 ;; Inpure functions (or functions with effects)
 ;;
+(defun oracle--uuid-convert! (begin end)
+  "Convert raw/uuid value"
+  (let ((str (buffer-substring-no-properties begin end)))
+    (oracle--update-buffer! begin end (oracle--uuid-convert-region str))))
+
 (defun oracle--find-uuid-start! ()
   (+ (point) (skip-chars-backward "[[:alnum:]-]")))
 
