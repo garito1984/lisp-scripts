@@ -27,11 +27,12 @@
     (oracle--uuid-convert! begin end)))
 
 ;;
-;; Pure functions (no effects)
+;; Pure functions (no side effects)
 ;;
+
 (defun oracle--uuid-convert-region (str)
   "Convert value from RAW to UUID and vice versa"
-  (let* ((str-len (length str)))
+  (let ((str-len (length str)))
     (cond ((equal str-len 36) ; UUID
 	   (oracle--uuid-to-raw str))
 	  ((equal str-len 32) ; RAW
@@ -45,13 +46,14 @@
 
 (defun oracle--raw-to-uuid (raw-uuid)
   "Convert RAW into a UUID"
-  (let* ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
-	 (ext-sect (lambda (s) (substring raw-uuid (car s) (cdr s)))))
+  (let ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
+	(ext-sect (lambda (s) (substring raw-uuid (car s) (cdr s)))))
     (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar ext-sect sections)))))
 
 ;;
-;; Inpure functions (or functions with effects)
+;; Impure functions (with side effects)
 ;;
+
 (defun oracle--uuid-convert! (begin end)
   "Convert raw/uuid value"
   (let ((str (buffer-substring-no-properties begin end)))
