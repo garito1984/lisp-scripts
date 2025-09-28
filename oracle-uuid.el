@@ -45,13 +45,9 @@
 
 (defun oracle--raw-to-uuid (raw-uuid)
   "Convert RAW into a UUID"
-  (let* ((uuid-first  (substring raw-uuid 0 8))
- 	 (uuid-second (substring raw-uuid 8 12))
-	 (uuid-third  (substring raw-uuid 12 16))
-	 (uuid-fourth (substring raw-uuid 16 20))
-	 (uuid-fifth  (substring raw-uuid 20 32)))
-    (downcase (format "%s-%s-%s-%s-%s"
-		      uuid-first uuid-second uuid-third uuid-fourth uuid-fifth))))
+  (let* ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
+	 (ext-sect (lambda (s) (substring raw-uuid (car s) (cdr s)))))
+    (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar ext-sect sections)))))
 
 ;;
 ;; Inpure functions (or functions with effects)
