@@ -56,8 +56,7 @@
 
 (defun oracle--update-buffer! (begin end)
   "Convert raw/uuid value"
-  (let* ((str  (buffer-substring-no-properties begin end))
-	 (uuid (oracle--uuid-convert str)))
+  (let ((uuid (oracle--uuid-convert (buffer-substring-no-properties begin end))))
     (delete-region begin end)
     (insert uuid)))
 
