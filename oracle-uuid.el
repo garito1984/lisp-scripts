@@ -57,8 +57,8 @@
 (defun oracle--update-buffer! (begin end)
   "Convert raw/uuid value"
   (let ((uuid (oracle--uuid-convert (buffer-substring-no-properties begin end))))
-    (if (null uuid)
-	(error "Not a valid RAW or plain UUID"))
+    (unless uuid
+      (error "Not a valid RAW or plain UUID"))
     (delete-region begin end)
     (insert uuid)))
 
