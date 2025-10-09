@@ -30,7 +30,7 @@
 ;; Pure functions (no side effects)
 ;;
 
-(defun oracle--uuid-convert-region (str)
+(defun oracle--uuid-convert (str)
   "Convert value from RAW to UUID and vice versa"
   (let ((str-len (length str)))
     (cond ((equal str-len 36) ; UUID
@@ -57,7 +57,7 @@
 (defun oracle--uuid-convert! (begin end)
   "Convert raw/uuid value"
   (let ((str (buffer-substring-no-properties begin end)))
-    (oracle--update-buffer! begin end (oracle--uuid-convert-region str))))
+    (oracle--update-buffer! begin end (oracle--uuid-convert str))))
 
 (defun oracle--find-uuid-start! ()
   (+ (point) (skip-chars-backward "[[:alnum:]-]")))
