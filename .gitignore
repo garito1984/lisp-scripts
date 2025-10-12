@@ -1,2 +1,5 @@
 # Emacs byte-compiled files
 *.elc
+
+# Emacs backup files
+*~
