@@ -46,8 +46,8 @@
 (defun fa-oracle--uuid-raw-to-dash (raw-uuid)
   "Convert RAW into a UUID"
   (let ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
-	(ext-sect (lambda (s) (substring raw-uuid (car s) (cdr s)))))
-    (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar ext-sect sections)))))
+	(extract (lambda (s) (substring raw-uuid (car s) (cdr s)))))
+    (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar extract sections)))))
 
 ;;
 ;; Impure functions (with side effects)
