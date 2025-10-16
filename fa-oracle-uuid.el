@@ -13,14 +13,14 @@
 ;;; Code:
 
 (defun fa-oracle-uuid-convert ()
-  "Convert value from RAW to UUID and vice versa"
+  "Convert UUID from RAW to DASH and vice versa"
   (interactive)
   (let ((begin (fa-oracle--find-uuid-start!))
 	(end   (fa-oracle--find-uuid-end!)))
     (fa-oracle--update-buffer! begin end)))
 
 (defun fa-oracle-uuid-convert-region ()
-  "Convert value from RAW to UUID and vice versa"
+  "Convert UUID from RAW to DASH format and vice versa"
   (interactive)
   (let ((begin (region-beginning))
 	(end   (region-end)))
@@ -31,22 +31,22 @@
 ;;
 
 (defun fa-oracle--uuid-convert (str)
-  "Convert value from RAW to UUID and vice versa"
+  "Convert UUID from RAW to DASH format and vice versa"
   (let ((len (length str)))
-    (cond ((equal len 36) ; UUID
+    (cond ((equal len 36) ; DASH
 	   (fa-oracle--uuid-dash-to-raw str))
 	  ((equal len 32) ; RAW
 	   (fa-oracle--uuid-raw-to-dash str))
 	  (t nil))))
 
-(defun fa-oracle--uuid-dash-to-raw (uuid)
-  "Convert UUID into RAW"
-  (upcase (string-replace "-" "" uuid)))
+(defun fa-oracle--uuid-dash-to-raw (dash-uuid)
+  "Convert DASH format UUID into RAW"
+  (upcase (string-replace "-" "" dash-uuid)))
 
 (defun fa-oracle--uuid-raw-to-dash (raw-uuid)
-  "Convert RAW into a UUID"
+  "Convert RAW format UUID into DASH"
   (let ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
-	(extract (lambda (s) (substring raw-uuid (car s) (cdr s)))))
+	(extract  (lambda (s) (substring raw-uuid (car s) (cdr s)))))
     (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar extract sections)))))
 
 ;;
@@ -54,10 +54,10 @@
 ;;
 
 (defun fa-oracle--update-buffer! (begin end)
-  "Convert raw/uuid value"
+  "Convert uuid into raw/dash format"
   (let ((uuid (fa-oracle--uuid-convert (buffer-substring-no-properties begin end))))
     (unless uuid
-      (error "Not a valid RAW or plain UUID"))
+      (error "Not a valid RAW or DASH UUID"))
     (delete-region begin end)
     (insert uuid)))
 
