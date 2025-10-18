@@ -55,14 +55,17 @@
 
 (defun fa-oracle--update-buffer! (begin end)
   "Convert uuid into raw/dash format"
-  (let ((uuid (fa-oracle--uuid-convert (buffer-substring-no-properties begin end))))
+  (let ((uuid (fa-oracle--uuid-convert (buffer-substring-no-properties begin end)))) ; Side effect: Read buffer
     (unless uuid
       (error "Not a valid RAW or DASH UUID"))
+    ;; Side effects: Delete/insert in buffer
     (delete-region begin end)
     (insert uuid)))
 
 (defun fa-oracle--find-uuid-start! ()
-  (+ (point) (skip-chars-backward "[[:alnum:]-]")))
+  ;; Side effect: Move point
+  (+ (point) (skip-chars-backward "[[:alnum:]-]"))) 
 
 (defun fa-oracle--find-uuid-end! ()
+  ;; Side effect: Move point
   (+ (point) (skip-chars-forward "[[:alnum:]-]")))
