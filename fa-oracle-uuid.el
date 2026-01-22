@@ -47,7 +47,7 @@
   "Convert RAW format UUID into DASH"
   (let ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
 	(extract  (lambda (s) (substring raw-uuid (car s) (cdr s)))))
-    (downcase (apply 'format "%s-%s-%s-%s-%s" (mapcar extract sections)))))
+    (mapconcat 'downcase (mapcar extract sections) "-")))
 
 ;;
 ;; Impure functions (with side effects)
