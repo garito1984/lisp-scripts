@@ -32,12 +32,10 @@
 
 (defun fa-oracle--uuid-convert (str)
   "Convert UUID from RAW to DASH format and vice versa"
-  (let ((len (length str)))
-    (cond ((equal len 36) ; DASH
-	   (fa-oracle--uuid-dash-to-raw str))
-	  ((equal len 32) ; RAW
-	   (fa-oracle--uuid-raw-to-dash str))
-	  (t nil))))
+  (pcase (length str) 
+    (36 (fa-oracle--uuid-dash-to-raw str)) ; DASH
+    (32 (fa-oracle--uuid-raw-to-dash str)) ; RAW
+    (_ nil)))
 
 (defun fa-oracle--uuid-dash-to-raw (dash-uuid)
   "Convert DASH format UUID into RAW"
