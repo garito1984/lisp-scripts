@@ -44,8 +44,7 @@
 (defun fa-oracle--uuid-raw-to-dash (raw-uuid)
   "Convert RAW format UUID into DASH"
   (let ((components
-	 (named-let extract ((from 0)
-			     (tos '(8 12 16 20 32)))
+	 (named-let extract ((from 0) (tos '(8 12 16 20 32)))
 	   (if tos
 	       (cons (substring raw-uuid from (car tos))
 		     (extract (car tos) (cdr tos)))))))
