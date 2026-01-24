@@ -43,9 +43,13 @@
 
 (defun fa-oracle--uuid-raw-to-dash (raw-uuid)
   "Convert RAW format UUID into DASH"
-  (let ((sections '((0 . 8) (8 . 12) (12 . 16) (16 . 20) (20 . 32)))
-	(extract  (lambda (s) (substring raw-uuid (car s) (cdr s)))))
-    (mapconcat 'downcase (mapcar extract sections) "-")))
+  (let ((components
+	 (named-let extract ((from 0)
+			     (tos '(8 12 16 20 32)))
+	   (if tos
+	       (cons (substring raw-uuid from (car tos))
+		     (extract (car tos) (cdr tos)))))))
+    (downcase (string-join components "-"))))
 
 ;;
 ;; Impure functions (with side effects)
