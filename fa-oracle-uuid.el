@@ -1,4 +1,4 @@
-;;; oracle-uuid.el -*- lexical-binding: t -*-
+;;; fa-oracle-uuid.el -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
