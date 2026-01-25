@@ -19,12 +19,10 @@
 	(end   (fa-oracle--find-uuid-end!)))
     (fa-oracle--update-buffer! begin end)))
 
-(defun fa-oracle-uuid-convert-region ()
+(defun fa-oracle-uuid-convert-region (beginning end)
   "Convert UUID from RAW to DASH format and vice versa"
-  (interactive)
-  (let ((begin (region-beginning))
-	(end   (region-end)))
-    (fa-oracle--update-buffer! begin end)))
+  (interactive "r")
+  (fa-oracle--update-buffer! beginning end))
 
 ;;
 ;; Pure functions (no side effects)
