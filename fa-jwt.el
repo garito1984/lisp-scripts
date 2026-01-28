@@ -22,18 +22,18 @@
 ;;
 
 (defun fa-jwt--decode (str all)
-  (let ((components (split-string str "\\.")))
-    (let ((header    (nth 0 components))
-	  (payload   (nth 1 components))
-	  (signature (nth 2 components)))
-      (string-join
-       (list
-	(base64-decode-string header t)
-	(base64-decode-string payload t)
-	(if all
-	    (base64-decode-string signature t)
-	  signature))
-       "."))))
+  (let* ((components (split-string str "\\."))
+	 (header    (nth 0 components))
+	 (payload   (nth 1 components))
+	 (signature (nth 2 components)))
+    (string-join
+     (list
+      (base64-decode-string header t)
+      (base64-decode-string payload t)
+      (if all
+	  (base64-decode-string signature t)
+	signature))
+     ".")))
 
 ;;
 ;; Impure functions (with side effects)
