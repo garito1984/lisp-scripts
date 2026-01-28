@@ -54,5 +54,5 @@ This is useful for instance to decode JWT tokens"
 
 ;; Load personal scripts
 (load "~/Documents/lisp-scripts/fa-oracle-uuid")
-(load "~/Documents/lisp-scripts/jwt-decode")
+(load "~/Documents/lisp-scripts/fa-jwt")
 
