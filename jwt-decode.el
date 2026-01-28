@@ -38,7 +38,9 @@
   (split-string (buffer-substring-no-properties beginning end) "\\."))
 
 (defun fa--find-jwt-token-start! ()
-  (+ (point) (skip-chars-backward "[[:alnum:]_.]")))
+  (let ((p (point)))
+    (+ p (skip-chars-backward "[[:alnum:]_.]"))))
 
 (defun fa--find-jwt-token-end! ()
-  (+ (point) (skip-chars-forward "[[:alnum:]_.]")))
+  (let ((p (point)))
+    (+ p (skip-chars-forward "[[:alnum:]_.]"))))
