@@ -1,3 +1,7 @@
+;;; jwt-decode.el -*- lexical-binding: t -*-
+
+;;; Commentary
+
 ;;
 ;; Decode jwt-token
 ;;
@@ -8,13 +12,14 @@
   (interactive)
   (fa--jwt-decode-impl (fa--find-jwt-token-start) (fa--find-jwt-token-end)))
 
-(defun fa-jwt-decode-region (&optional all)
+(defun fa-jwt-decode-region (beginning end &optional all)
   "Decode jwt-token region"
-  (interactive)
-  (fa--jwt-decode-impl (region-beginning) (region-end) all))
+  (interactive "r")
+  (fa--jwt-decode-impl beginning end all))
 
 (defun fa--jwt-decode-impl (beginning end &optional all)
   "Decode jwt-token impl"
+  (message (format "*** %d %d" beginning end))
   (let* ((components (fa--buffer-jwt-token-subcomponents beginning end))
 	 (header (pop components))
 	 (payload (pop components))
@@ -34,8 +39,7 @@
   (split-string (buffer-substring-no-properties beginning end) "\\."))
 
 (defun fa--find-jwt-token-start ()
-  (re-search-backward "\\(^[[:graph:]]\\|[^[:graph:]]\\)") ;; Find first non graph char or the first char if token is at the beginning of the line
-  (re-search-forward "[[:blank:][:cntrl:]]*")) ;; If there is a blank or newline char, skip it
+  (+ (point) (skip-chars-backward "[[:alnum:]_.]")))
 
 (defun fa--find-jwt-token-end ()
-  (re-search-forward "[[:graph:]]+"))
+  (+ (point) (skip-chars-forward "[[:alnum:]_.]")))
