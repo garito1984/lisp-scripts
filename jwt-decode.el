@@ -19,7 +19,7 @@
 
 (defun fa--jwt-decode-impl (beginning end &optional all)
   "Decode jwt-token impl"
-  (let* ((components (fa--buffer-jwt-token-subcomponents beginning end))
+  (let* ((components (fa--buffer-jwt-token-subcomponents! beginning end))
 	 (header (pop components))
 	 (payload (pop components))
 	 (signature (pop components)))
