@@ -18,7 +18,6 @@
   (fa--jwt-decode-impl beginning end all))
 
 (defun fa--jwt-decode-impl (beginning end &optional all)
-  (message (format "* %d %d" beginning end))
   "Decode jwt-token impl"
   (let* ((components (fa--buffer-jwt-token-subcomponents beginning end))
 	 (header (pop components))
@@ -39,9 +38,7 @@
   (split-string (buffer-substring-no-properties beginning end) "\\."))
 
 (defun fa--find-jwt-token-start! ()
-  (message (format "* start: %d" (point)))
   (+ (point) (skip-chars-backward "[[:alnum:]_.]")))
 
 (defun fa--find-jwt-token-end! ()
-  (message (format "* end: %d" (point)))
   (+ (point) (skip-chars-forward "[[:alnum:]_.]")))
