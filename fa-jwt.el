@@ -41,10 +41,10 @@
 
 (defun fa-jwt--decode-impl! (beginning end &optional all)
   "Decode jwt-token impl"
-  (let ((token (buffer-substring-no-properties beginning end)))
-    (let ((decoded-token (fa-jwt--decode token all)))
-      (delete-region beginning end)
-      (insert decoded-token))))
+  (let* ((token (buffer-substring-no-properties beginning end))
+	 (decoded-token (fa-jwt--decode token all)))
+    (delete-region beginning end)
+    (insert decoded-token)))
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
