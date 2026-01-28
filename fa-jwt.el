@@ -21,29 +21,30 @@
 ;; Pure functions (no side effects)
 ;;
 
+(defun fa-jwt--decode (str all)
+  (let ((components (split-string str "\\.")))
+    (let ((header    (nth 0 components))
+	  (payload   (nth 1 components))
+	  (signature (nth 2 components)))
+      (string-join
+       (list
+	(base64-decode-string header t)
+	(base64-decode-string payload t)
+	(if all
+	    (base64-decode-string signature t)
+	  signature))
+       "."))))
+
 ;;
 ;; Impure functions (with side effects)
 ;;
 
 (defun fa-jwt--decode-impl! (beginning end &optional all)
   "Decode jwt-token impl"
-  (let* ((components (fa-jwt--buffer-token-subcomponents! beginning end))
-	 (header (pop components))
-	 (payload (pop components))
-	 (signature (pop components)))
-    (delete-region beginning end)
-    (insert
-     (string-join
-      (list
-       (base64-decode-string header t)
-       (base64-decode-string payload t)
-       (if all
-	   (base64-decode-string signature t)
-	 signature))
-      "."))))
-
-(defun fa-jwt--buffer-token-subcomponents! (beginning end)
-  (split-string (buffer-substring-no-properties beginning end) "\\."))
+  (let ((token (buffer-substring-no-properties beginning end)))
+    (let ((decoded-token (fa-jwt--decode token all)))
+      (delete-region beginning end)
+      (insert decoded-token))))
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
