@@ -10,12 +10,12 @@
 (defun fa-jwt-decode ()
   "Decode jwt-token"
   (interactive)
-  (fa-jwt--decode-impl! (fa-jwt--find-token-start!) (fa-jwt--find-token-end!)))
+  (fa-jwt--decode-token-in-buffer! (fa-jwt--find-token-start!) (fa-jwt--find-token-end!)))
 
 (defun fa-jwt-decode-region (beginning end &optional all)
   "Decode jwt-token region"
   (interactive "r")
-  (fa-jwt--decode-impl! beginning end all))
+  (fa-jwt--decode-token-in-buffer! beginning end all))
 
 ;;
 ;; Pure functions (no side effects)
@@ -39,7 +39,7 @@
 ;; Impure functions (with side effects)
 ;;
 
-(defun fa-jwt--decode-impl! (beginning end &optional all)
+(defun fa-jwt--decode-token-in-buffer! (beginning end &optional all)
   "Decode jwt-token impl"
   (let* ((token (buffer-substring-no-properties beginning end))
 	 (decoded-token (fa-jwt--decode token all)))
