@@ -62,9 +62,11 @@
     (insert uuid)))
 
 (defun fa-oracle--find-uuid-start! ()
-  ;; Side effect: Move point
-  (+ (point) (skip-chars-backward "[[:alnum:]-]")))
+  ;; Side effect: Read/Move point
+  (let ((p (point)))
+    (+ p (skip-chars-backward "[[:alnum:]-]"))))
 
 (defun fa-oracle--find-uuid-end! ()
-  ;; Side effect: Move point
-  (+ (point) (skip-chars-forward "[[:alnum:]-]")))
+  ;; Side effect: Read/Move point
+  (let ((p (point)))
+    (+ p (skip-chars-forward "[[:alnum:]-]"))))
