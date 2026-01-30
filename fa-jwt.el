@@ -48,7 +48,7 @@
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
-    (+ p (skip-chars-backward "[[:alnum:]_.]"))))
+    (+ (skip-chars-backward "[[:alnum:]_.]") p)))
 
 (defun fa-jwt--find-token-end! ()
   (let ((p (point)))
