@@ -41,10 +41,11 @@
 
 (defun fa-jwt--decode-token-in-buffer! (beginning end &optional all)
   "Decode jwt-token impl"
-  (let* ((token (buffer-substring-no-properties beginning end))
-	 (decoded-token (fa-jwt--decode token all)))
+  (let ((token (buffer-substring-no-properties beginning end)))
+    (unless (equal 3 (length (split-string token "\\.")))
+      (error "Couldn't recognize a JWT token"))
     (delete-region beginning end)
-    (insert decoded-token)))
+    (insert (fa-jwt--decode token all))))
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
