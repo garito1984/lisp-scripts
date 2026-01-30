@@ -53,7 +53,9 @@
 
 (defun fa-oracle--update-buffer! (begin end)
   "Convert uuid into raw/dash format"
-  (let ((uuid (fa-oracle--uuid-convert (buffer-substring begin end)))) ; Side effect: Read buffer
+  ;; Side effect: Read buffer
+  (let* ((str (buffer-substring begin end)) 
+	 (uuid (fa-oracle--uuid-convert str)))
     (unless uuid
       (error "Not a valid RAW or DASH UUID"))
     ;; Side effects: Delete/Insert in buffer
