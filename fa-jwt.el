@@ -10,7 +10,9 @@
 (defun fa-jwt-decode ()
   "Decode jwt-token"
   (interactive)
-  (fa-jwt--decode-token-in-buffer! (fa-jwt--find-token-start!) (fa-jwt--find-token-end!)))
+  (let ((beginning (fa-jwt--find-token-start!))
+	(end       (fa-jwt--find-token-end!)))
+    (fa-jwt--decode-token-in-buffer! beginning end)))
 
 (defun fa-jwt-decode-region (beginning end &optional all)
   "Decode jwt-token region"
