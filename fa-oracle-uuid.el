@@ -56,7 +56,7 @@
   (let ((uuid (fa-oracle--uuid-convert (buffer-substring begin end)))) ; Side effect: Read buffer
     (unless uuid
       (error "Not a valid RAW or DASH UUID"))
-    ;; Side effects: Delete/insert in buffer
+    ;; Side effects: Delete/Insert in buffer
     (delete-region begin end)
     (insert uuid)))
 
