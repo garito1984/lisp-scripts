@@ -51,7 +51,7 @@
   (let ((str (buffer-substring-no-properties beginning end)))
     (unless (fa-jwt--validate-jwt-token str)
       (error "Couldn't recognize a JWT token"))
-    ;; Side effects: Delete/insert in buffer
+    ;; Side effects: Delete/Insert in buffer
     (delete-region beginning end)
     (insert (fa-jwt--decode str all))))
 
