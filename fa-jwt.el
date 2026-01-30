@@ -38,7 +38,7 @@
 (defun fa-jwt--validate-jwt-token (str)
   "Validate that STR conforms with the aspect of a JWT token"
   (and (equal 3 (length (split-string str "\\.")))
-       (string-match "[[:alnum:]=-_.]+" str)))
+       (string-match "[[:alnum:]=\\-_.]+" str)))
 
 ;;
 ;; Impure functions (with side effects)
@@ -54,8 +54,8 @@
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
-    (+ (skip-chars-backward "[[:alnum:]=-_.]") p)))
+    (+ (skip-chars-backward "[[:alnum:]=\\-_.]") p)))
 
 (defun fa-jwt--find-token-end! ()
   (let ((p (point)))
-    (+ p (skip-chars-forward "[[:alnum:]=-_.]"))))
+    (+ p (skip-chars-forward "[[:alnum:]=\\-_.]"))))
