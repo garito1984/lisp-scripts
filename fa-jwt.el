@@ -51,13 +51,16 @@
   (let ((str (buffer-substring-no-properties beginning end)))
     (unless (fa-jwt--validate-jwt-token str)
       (error "Couldn't recognize a JWT token"))
+    ;; Side effects: Delete/insert in buffer
     (delete-region beginning end)
     (insert (fa-jwt--decode str all))))
 
 (defun fa-jwt--find-token-start! ()
+  ;; Side effect: Read/Move point
   (let ((p (point)))
     (+ (skip-chars-backward "[[:alnum:]=\\-_.]") p)))
 
 (defun fa-jwt--find-token-end! ()
+  ;; Side effect: Read/Move point
   (let ((p (point)))
     (+ p (skip-chars-forward "[[:alnum:]=\\-_.]"))))
