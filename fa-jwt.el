@@ -37,10 +37,8 @@
 
 (defun fa-jwt--validate-jwt-token (str)
   "Validate that STR conforms with the aspect of a JWT token"
-  (if (and (equal 3 (length (split-string str "\\.")))
-	   (string-match "[[:alnum:]_.]+" str))
-      t
-    nil))
+  (and (equal 3 (length (split-string str "\\.")))
+       (string-match "[[:alnum:]_.]+" str)))
 
 ;;
 ;; Impure functions (with side effects)
