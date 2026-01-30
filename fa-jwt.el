@@ -35,17 +35,24 @@
 	signature))
      ".")))
 
+(defun fa-jwt--validate-jwt-token (str)
+  "Validate that STR conforms with the aspect of a JWT token"
+  (if (and (equal 3 (length (split-string str "\\.")))
+	   (string-match "[[:alnum:]_.]+" str))
+      t
+    nil))
+
 ;;
 ;; Impure functions (with side effects)
 ;;
 
 (defun fa-jwt--decode-token-in-buffer! (beginning end &optional all)
   "Decode jwt-token impl"
-  (let ((token (buffer-substring-no-properties beginning end)))
-    (unless (equal 3 (length (split-string token "\\.")))
+  (let ((str (buffer-substring-no-properties beginning end)))
+    (unless (fa-jwt--validate-jwt-token str)
       (error "Couldn't recognize a JWT token"))
     (delete-region beginning end)
-    (insert (fa-jwt--decode token all))))
+    (insert (fa-jwt--decode str all))))
 
 (defun fa-jwt--find-token-start! ()
   (let ((p (point)))
