@@ -48,7 +48,7 @@
 
 (defun fa-jwt--decode-token-in-buffer! (beginning end &optional all)
   "Decode jwt-token impl"
-  (let ((str (buffer-substring-no-properties beginning end)))
+  (let ((str (buffer-substring beginning end)))
     (unless (fa-jwt--validate-jwt-token str)
       (error "Couldn't recognize a JWT token"))
     ;; Side effects: Delete/Insert in buffer
