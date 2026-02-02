@@ -1,4 +1,4 @@
-;;; fa-oracle-uuid.el -*- lexical-binding: t -*-
+;;; fa-oracle-uuid.el --- Convert UUID as used in Oracle -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
