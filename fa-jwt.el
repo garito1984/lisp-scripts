@@ -25,9 +25,9 @@
 
 (defun fa-jwt--decode (str all)
   (let* ((components (split-string str "\\."))
-	 (header    (nth 0 components))
-	 (payload   (nth 1 components))
-	 (signature (nth 2 components)))
+	 (header     (nth 0 components))
+	 (payload    (nth 1 components))
+	 (signature  (nth 2 components)))
     (string-join
      (list
       (base64-decode-string header t)
